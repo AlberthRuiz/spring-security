@@ -3,6 +3,9 @@ package edu.pe.cibertec.spring_security.persistence.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Setter
 @Getter
 @Builder
@@ -28,5 +31,11 @@ public class UserEntity {
     private boolean credentialNoExpired;
 
     ///  ROLES
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<RolesEntity> roles = new HashSet<>();
+
 }
 
